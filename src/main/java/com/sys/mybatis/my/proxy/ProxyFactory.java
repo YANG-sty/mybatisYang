@@ -108,12 +108,13 @@ public class ProxyFactory {
         //有返回值类型的代码（接口）
         // $args 将所有传递过来的参数，封装成一个数组 Object args[]
         String src = "return ($r)this.handler.invoke(\"%s\",$args);";
-        //无法返回值类型的代码（接口）
+        //无返回值类型的代码（接口）
         String voidSrc = "this.handler.invoke(\"%s\",$args);";
         for (Method method : cla.getMethods()) {
             CtClass returnType = classPool.get(method.getReturnType().getName());
             String name = method.getName();
 
+            //常规的数组，装换成 javassist 支持的class 数据组
             CtClass[] parameters = toCtClass(classPool, method.getParameterTypes());
             CtClass[] errors = toCtClass(classPool, method.getExceptionTypes());
 
@@ -275,10 +276,19 @@ public class ProxyFactory {
             }
             return null;
         };
-        TestService2 o = (TestService2) Proxy.newProxyInstance(loader, interfaces, handler);
+        TestService2 o = (TestService2) Proxy.newProxyInstance(
+                loader, //接口类
+                interfaces, //需要实现的接口数组
+                handler); //处理接口方法调用的InvocationHandler实例
         o.sayHello1("ddd", 1);
         o.sayHello("666666");
     }
+
+    /**
+     * 动态代理，
+     * 简单来说，就是通过 InvocationHandler 对接口的实现
+     *
+     */
 
 
 }
