@@ -75,6 +75,40 @@
 
 
     <build>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Project-name>${project.name}</Project-name>
+                            <Project-version>${project.version}</Project-version>
+<!--                            <Premain-Class>com.coderead.agent.AgentMain</Premain-Class>-->
+<!--                            <Premain-Class>com.sys.insertPilepublic.AgentMain</Premain-Class>-->
+                            <!-- 需要打包的类的 -->
+                            <Premain-Class>com.sys.insertPilepublic.PublicAgentMain</Premain-Class>
+                            <Can-Redefine-Classes>false</Can-Redefine-Classes>
+                            <Can-Retransform-Classes>false</Can-Retransform-Classes>
+                        </manifestEntries>
+                    </archive>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>utf8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+
         <resources>
             <resource>
                 <directory>src/main/java</directory>
