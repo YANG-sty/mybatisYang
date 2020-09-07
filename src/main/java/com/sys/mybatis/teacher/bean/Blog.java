@@ -2,16 +2,22 @@
 package com.sys.mybatis.teacher.bean;
 
 import java.util.List;
+import java.util.Map;
 
-public class Blog implements java.io.Serializable {
+public  class Blog implements java.io.Serializable {
 
     private int id;
     private String title;
     private User author;
     private String body;
     private List<Comment> comments;
+    Map<String, String> labels;
 
     public Blog() {
+    }
+
+    public Blog(int id) {
+        this.id = id;
     }
 
     public int getId() {
@@ -31,6 +37,7 @@ public class Blog implements java.io.Serializable {
     }
 
     public User getAuthor() {
+        System.out.println("调用getAuthor");
         return author;
     }
 
@@ -54,8 +61,22 @@ public class Blog implements java.io.Serializable {
         this.comments = comments;
     }
 
+    public Map<String, String> getLabels() {
+        return labels;
+    }
+
+    public void setLabels(Map<String, String> labels) {
+        this.labels = labels;
+    }
+
     @Override
     public String toString() {
-        return "Blog: " + id + " : " + title + " (" + author + ")";
+        return "Blog{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author=" + author +
+                ", body='" + body + '\'' +
+                ", comments=" + comments +
+                '}';
     }
 }

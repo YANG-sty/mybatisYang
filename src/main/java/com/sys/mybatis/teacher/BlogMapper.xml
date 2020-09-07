@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sys.mybatis.teacher.BlogMapper">
+
+    <!--===========循环依赖 开始 ======  -->
+    <!--<resultMap id="blogMap" type="blog" autoMapping="true">
+        <result column="title" property="title"/>
+        <collection property="comments" column="id" select="selectCommentsByBlogId" fetchType="eager"/>
+    </resultMap>
+
+
+    <resultMap id="commentMap" type="comment">
+        <association property="blog" column="blog_id" select="selectBlogById" fetchType="eager"/>
+    </resultMap>
+
+    <select id="selectBlogById" resultMap="blogMap">
+        select  * from blog where id=#{id}
+    </select>
+
+
+    <select id="selectCommentsByBlogId" resultMap="commentMap">
+        select * from comment where blog_id=#{blogId}
+    </select>-->
+    <!-- =========循环依赖 结束 ======  -->
+
+
+    <!--  联合查询 -->
+    <!--<resultMap id="blogMap" type="blog" autoMapping="true" >
+        <id column="id" property="id" />
+        <collection property="comments" ofType="comment"  autoMapping="true"
+                    columnPrefix="comment_"  >
+        </collection>
+    </resultMap>
+
+    <select id="selectBlogById" resultMap="blogMap">
+                    select a.id,a.title,
+                    c.id as comment_id,
+                    c.body as comment_body
+            from blog a
+                     left join comment c on a.id=c.blog_id
+            where a.id = #{id};
+    </select>-->
+
+    <!--    懒加载-->
+
+    <!--<resultMap id="blogMap" type="blog" autoMapping="true">
+&lt;!&ndash;        <id column="id" property="id"/>&ndash;&gt;
+        <result column="title" property="title"/>
+        <association property="comments" column="id" select="selectCommentsByBlog" fetchType="lazy"/>
+    </resultMap>
+    <select id="selectBlogById" resultMap="blogMap">
+                   select  * from blog where id=#{id}
+    </select>
+    <select id="selectCommentsByBlog" resultType="comment">
+        select * from comment where blog_id=#{id}
+    </select>-->
+    <!-- 循环引用 -->
+    <resultMap id="blogMap" type="blog" autoMapping="true">
+        <id column="id" property="id"/>
+        <association property="comments" javaType="comment" autoMapping="true" columnPrefix="comment_">
+            <association property="blog" javaType="blog" resultMap="blogMap"/>
+        </association>
+    </resultMap>
+
+    <select id="selectBlogById"  resultMap="blogMap">
+       select a.id,a.title,
+       c.id as comment_id,
+       c.body as comment_body
+       from blog a
+       left join comment c on a.id=c.blog_id
+       where a.id = #{id}
+    </select>
+</mapper>

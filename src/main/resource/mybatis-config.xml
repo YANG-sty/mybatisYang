@@ -4,16 +4,18 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-     <properties resource="app.properties">
+    <properties resource="app.properties">
     </properties>
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
         <!-- 默认为 REUSEStatemetn 重用执行器 -->
         <setting name="defaultExecutorType" value="REUSE"/>
 <!--        <setting name="localCacheScope" value="STATEMENT"/>-->
+        <setting name="lazyLoadingEnabled" value="true"/>
     </settings>
 
     <typeAliases>
+        <package name="com.sys.mybatis.teacher.bean"/>
     </typeAliases>
 
     <environments default="dev">

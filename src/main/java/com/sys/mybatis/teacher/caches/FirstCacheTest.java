@@ -1,9 +1,9 @@
-package com.sys.mybatis.teacher;
+package com.sys.mybatis.teacher.caches;
 
+import com.sys.mybatis.teacher.ExecutorTest;
+import com.sys.mybatis.teacher.UserMapper;
 import com.sys.mybatis.teacher.bean.User;
-import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.session.*;
-import org.apache.ibatis.transaction.jdbc.JdbcTransaction;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -11,7 +11,6 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
